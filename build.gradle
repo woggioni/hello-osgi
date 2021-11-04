@@ -1,0 +1,28 @@
+plugins {
+    id 'net.woggioni.gradle.osgi-app'
+}
+
+repositories {
+    maven {
+        url = 'https://woggioni.net/mvn/'
+    }
+    mavenCentral()
+}
+
+osgiApp {
+    bootstrapperVersion = "0.1"
+    mainApplicationComponent = "net.woggioni.hello.osgi.Main"
+}
+
+dependencies {
+    compileOnly group: "org.osgi", name: "osgi.annotation", version: getProperty("osgi.version")
+    compileOnly group: "org.osgi", name: "osgi.core", version: getProperty("osgi.version")
+    compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: getProperty("osgiServiceComponent.version")
+
+    bootstrapClasspath group: "org.apache.felix", name: "org.apache.felix.framework", version: getProperty("felix.version")
+}
+
+wrapper {
+    distributionType = Wrapper.DistributionType.BIN
+    gradleVersion = getProperty('gradle.version')
+}
